@@ -42,11 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   // header
-                  Spacer(),
+                  Spacer(flex: 3),
                   Logo(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   menuBuild(),
-                  Spacer(),
+                  Spacer(flex: 1),
 
                   _children[_currentIndex],
 
