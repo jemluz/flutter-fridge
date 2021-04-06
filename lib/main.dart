@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/themes.dart';
 
 import 'screens/home_sreen.dart';
 
@@ -11,9 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: greenTheme(context),
       home: HomeScreen(),
     );
   }
