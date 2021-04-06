@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'transaction.dart';
 
 List<Transaction> demoTransactions = [
-  Transaction(productName: 'Couve', amount: 12, isAdditive: true, date: DateTime.now()),
-  Transaction(productName: 'Couve', amount: 2, isAdditive: false, date: DateTime.now()),
-  Transaction(productName: 'Ovos', amount: 5, isAdditive: false, date: DateTime.now()),
-  Transaction(productName: 'Cenoura', amount: 16, isAdditive: true, date: DateTime.now()),
+  Transaction(productName: 'Maçã', amount: 2, isAdditive: false, date: DateTime.now()),
+  Transaction(productName: 'Couve', amount: 12, isAdditive: true, date: DateTime.parse('2021-04-01 20:18:04Z')),
+  Transaction(productName: 'Ovos', amount: 5, isAdditive: false, date: DateTime.parse('2021-03-29 20:18:04Z')),
+  Transaction(productName: 'Cenoura', amount: 16, isAdditive: true, date: DateTime.parse('2021-03-28 20:18:04Z')),
 ];
 
 

@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   _navigateTo(int index) {
     setState(() {
       _currentIndex = index;
-      print(_currentIndex);
     });
   }
 

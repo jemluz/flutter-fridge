@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fridge/components/action_button.dart';
-import 'package:fridge/models/products.dart';
 
-import '../../themes.dart';
 import 'components/content.dart';
 
 class FridgeContent extends StatelessWidget {
