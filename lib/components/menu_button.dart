@@ -21,7 +21,7 @@ class MenuButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(16),
-      highlightColor: AppColors.GREEN_n51.withOpacity(.2),
+      highlightColor: Theme.of(context).primaryColor.withOpacity(.2),
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 12,

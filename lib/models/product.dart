@@ -1,20 +1,21 @@
 import 'package:flutter/foundation.dart';
 
-import 'transactions.dart';
+// import 'transaction.dart';
 
 class Product with ChangeNotifier{
   String id;
   String name;
+  String imgSrc;
   int amount;
 
   int _totalUsed = 0;
   int _totalAdded = 0;
-  List<Transactions> _transactions = [];
 
   Product({
     this.id,
     @required this.name,
     @required this.amount,
+    @required this.imgSrc,
   });
 
   int get totalUsed {
@@ -23,10 +24,6 @@ class Product with ChangeNotifier{
 
   int get totalAdded {
     return _totalAdded;
-  }
-
-  List<Transactions> get transactions {
-    return _transactions;
   }
 
   void updatedTotalAdded(int number) {

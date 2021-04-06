@@ -28,10 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Widget contentView() {
+    return _children[_currentIndex];
+  }
+
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -45,11 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Spacer(flex: 3),
                   Logo(),
                   SizedBox(height: 10),
-                  menuBuild(),
+                  buildMenu(),
                   Spacer(flex: 1),
-
-                  _children[_currentIndex],
-
+                  contentView()
                 ],
               ),
             ),
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Row menuBuild() {
+  Row buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
