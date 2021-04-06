@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class FridgeScreen extends StatelessWidget {
+class FridgeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
+    return SafeArea(
+      child: Text('sdasdasdasd'),
     );
   }
 }

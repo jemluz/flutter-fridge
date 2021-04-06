@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fridge/screens/fridge_screen.dart';
+
+import 'screens/home_sreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FridgeScreen(),
+      home: HomeScreen(),
     );
   }
 }
