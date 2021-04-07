@@ -24,7 +24,7 @@ class RankingCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       margin: EdgeInsets.only(bottom: 12, left: 20, right: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
@@ -36,11 +36,11 @@ class RankingCard extends StatelessWidget {
               fontFamily: 'Roboto'
             ),
           ),
-          SizedBox(width: size.width * .05),
+          SizedBox(width: size.width * .08),
           buildProductImage(product.imgSrc),
           SizedBox(width: size.width * .05),
           buildProductInfo(product.name, product.totalUsed),
-          Spacer(),
+          SizedBox(width: size.width * .05)
         ],
       ),
     );
@@ -66,7 +66,7 @@ class RankingCard extends StatelessWidget {
           name,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text('$amount unidades'),
+        Text('$amount unidades', style: TextStyle(color: AppColors.GRAY_n141.withOpacity(.8)),),
       ],
     );
   }
