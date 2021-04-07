@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
-// import 'dart:convert';
+import 'dart:convert';
 import 'product.dart';
 
 List<Product> demoProducts = [
@@ -66,19 +66,43 @@ class Products with ChangeNotifier {
     return ranking;
   }
 
-  void addProduct(Product newProduct) {
-    _items.add(Product(
-      id: Random().nextDouble().toString(),
-      name: newProduct.name,
-      amount: newProduct.amount,
-      imgSrc: newProduct.imgSrc,
-      totalUsed: newProduct.totalUsed,
-      totalAdded: newProduct.totalAdded,
-    ));
-    notifyListeners();
-  } // chamado sempre que for feita uma mudança importante, para notificar os componentes interessados
+  Future<void> addProduct(Product newProduct) {
+    const url = 'https://flutter-loja-41af1-default-rtdb.firebaseio.com/products';
+    return http.post(
+      url,
+      body: json.encode({
+        'name': newProduct.name,
+        'amount': newProduct.amount,
+        'imgSrc': newProduct.imgSrc,
+        'totalUsed': newProduct.totalUsed,
+        'totalAdded': newProduct.totalAdded,
+      }),
+    ).then((response) { 
+      _items.add(Product(
+        id:  json.decode(response.body)['name'],
+        name: newProduct.name,
+        amount: newProduct.amount,
+        imgSrc: newProduct.imgSrc,
+        totalUsed: newProduct.totalUsed,
+        totalAdded: newProduct.totalAdded,
+      ));
+      notifyListeners();
+    }).then((_) => null);
+  }
 
-  void updateProduct(Product product) {
+  // Future<void> addProduct(Product newProduct) {
+  //   _items.add(Product(
+  //     id: Random().nextDouble().toString(),
+  //     name: newProduct.name,
+  //     amount: newProduct.amount,
+  //     imgSrc: newProduct.imgSrc,
+  //     totalUsed: newProduct.totalUsed,
+  //     totalAdded: newProduct.totalAdded,
+  //   ));
+  //   notifyListeners();
+  // } // chamado sempre que for feita uma mudança importante, para notificar os componentes interessados
+
+  updateProduct(Product product) {
     if (product != null && product.id != null) {
       return;
     }
@@ -91,7 +115,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
+  deleteProduct(String id) {
     final index = _items.indexWhere((prod) => prod.id == id);
     if (index >= 0) {
       _items.removeWhere((prod) => prod.id == id);

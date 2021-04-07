@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 
 // import 'transaction.dart';
 
-class Product with ChangeNotifier{
-  String id = Random().nextDouble().toString();
-  String name = '';
-  String imgSrc = '';
-  int amount = 0;
+class Product with ChangeNotifier {
+  String id ;
+  String name ;
+  String imgSrc;
+  int amount;
 
   int totalUsed = 0;
   int totalAdded = 0;
@@ -18,14 +18,14 @@ class Product with ChangeNotifier{
     @required this.name,
     @required this.amount,
     @required this.imgSrc,
-    this.totalAdded,
-    this.totalUsed,
+    this.totalAdded = 0,
+    this.totalUsed = 0,
   });
 
   @override
-    String toString() {
-      return '{ ${this.name}, ${this.totalUsed} }';
-    }
+  String toString() {
+    return '{ ${this.id}, ${this.name}, ${this.amount}, ${this.imgSrc}, ${this.totalAdded}, ${this.totalUsed}, }';
+  }
 
   // int get totalUsed {
   //   return _totalUsed;
