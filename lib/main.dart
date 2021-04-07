@@ -3,6 +3,7 @@ import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'models/products.dart';
+import 'models/transactions.dart';
 import 'screens/home_sreen.dart';
 
 void main() {
@@ -17,6 +18,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => new Products(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => new Transactions(),
         ),
       ],
       child: MaterialApp(

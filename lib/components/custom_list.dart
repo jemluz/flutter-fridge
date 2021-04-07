@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../themes.dart';
 
 class CustomList extends StatelessWidget {
-  const CustomList({
+  CustomList({
     Key key,
     @required this.size,
     @required this.child,
   }) : super(key: key);
 
   final Size size;
-  final Widget child;
+  Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,6 @@ class CustomList extends StatelessWidget {
           child: child,
         ),
       ),
-      // ProductsList(size: size),
     );
   }
 

@@ -9,7 +9,7 @@ class TransactionCard extends StatelessWidget {
   const TransactionCard({
     Key key,
     @required this.size,
-    @required this.onPressed,
+    this.onPressed,
     @required this.transaction,
   }) : super(key: key);
 
