@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fridge/models/product.dart';
 
-import '../../../themes.dart';
+import '../../themes.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

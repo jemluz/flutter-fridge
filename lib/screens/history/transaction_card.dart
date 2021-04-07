@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fridge/models/transaction.dart';
 
-import '../../../themes.dart';
+import '../../themes.dart';
 
 class TransactionCard extends StatelessWidget {
   const TransactionCard({

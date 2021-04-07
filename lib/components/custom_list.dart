@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../themes.dart';
-import 'transactions_list.dart';
+import '../themes.dart';
 
-class Content extends StatelessWidget {
-  const Content({
+class CustomList extends StatelessWidget {
+  const CustomList({
     Key key,
     @required this.size,
+    @required this.child,
   }) : super(key: key);
 
   final Size size;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,15 @@ class Content extends StatelessWidget {
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.symmetric(horizontal: size.width * .05),
       decoration: backgroundDecoration(),
-      child: TransactionsList(size: size),
+      child: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.bottomCenter,
+          height: size.height * .6,
+          margin: EdgeInsets.only(top: 70),
+          child: child,
+        ),
+      ),
+      // ProductsList(size: size),
     );
   }
 
