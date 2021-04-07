@@ -17,7 +17,6 @@ class TopFiveContent extends StatelessWidget {
         alignment: Alignment.center,
         children: <Widget>[
           CustomList(
-            size: size,
             child: ListView.builder(
               itemCount: 5,
               itemBuilder: (context, index) => RankingCard(

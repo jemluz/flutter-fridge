@@ -18,18 +18,20 @@ class Transactions with ChangeNotifier{
   List<Transaction> get items => [..._items];
 
   List<Transaction> get onlyConsume {
-    List<Transaction> filteredList = _items;
+    List<Transaction> filteredList = [..._items];
     filteredList.retainWhere((prod) => prod.isAdditive == false);
     print(filteredList);
 
+    notifyListeners();  
     return filteredList;
   }
 
   List<Transaction> get onlyAdditive {
-    List<Transaction> filteredList = _items;
+    List<Transaction> filteredList = [..._items];
     filteredList.retainWhere((prod) => prod.isAdditive == true);
     print(filteredList);
 
+    notifyListeners();
     return filteredList;
   }
 

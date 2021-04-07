@@ -7,17 +7,17 @@ import '../../themes.dart';
 class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
-    @required this.size,
     @required this.onPressed,
     @required this.product,
   }) : super(key: key);
 
-  final Size size;
   final GestureTapCallback onPressed;
   final Product product;
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    
     return Container(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       margin: EdgeInsets.only(bottom: 12, left: 20, right: 20),
@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          buildProductImage(product.imgSrc),
+          buildProductImage(context, product.imgSrc),
           SizedBox(width: size.width * .05),
           buildProductInfo(product.name, product.amount),
           Spacer(),
@@ -49,7 +49,9 @@ class ProductCard extends StatelessWidget {
         ]);
   }
 
-  Container buildProductImage(String image) {
+  Container buildProductImage(BuildContext context, String image) {
+    var size = MediaQuery.of(context).size;
+
     return Container(
       width: size.width * .15,
       height: size.width * .15,

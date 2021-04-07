@@ -8,12 +8,10 @@ import '../../themes.dart';
 class TransactionCard extends StatelessWidget {
   const TransactionCard({
     Key key,
-    @required this.size,
     this.onPressed,
     @required this.transaction,
   }) : super(key: key);
 
-  final Size size;
   final GestureTapCallback onPressed;
   final Transaction transaction;
 
@@ -103,13 +101,13 @@ class TransactionCard extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
           decoration: BoxDecoration(
-            color: isAdditive ? Theme.of(context).colorScheme.secondary.withOpacity(.1) : Theme.of(context).colorScheme.error.withOpacity(.1),
+            color: isAdditive ? Theme.of(context).colorScheme.primary.withOpacity(.05) : Theme.of(context).colorScheme.error.withOpacity(.05),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
             '$amount unidades',
             style: TextStyle(
-                color: isAdditive ? Theme.of(context).colorScheme.secondary : Theme.of(context).colorScheme.error, fontSize: 14),
+                color: isAdditive ? Theme.of(context).colorScheme.primary.withOpacity(.8) : Theme.of(context).colorScheme.error.withOpacity(.8), fontSize: 14),
           ),
         ),
       ],

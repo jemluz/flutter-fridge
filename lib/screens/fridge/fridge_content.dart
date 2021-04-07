@@ -9,8 +9,6 @@ import 'product_card.dart';
 class FridgeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     final products = Provider.of<Products>(context);
 
     return SafeArea(
@@ -18,13 +16,11 @@ class FridgeContent extends StatelessWidget {
         alignment: Alignment.center,
         children: <Widget>[
           CustomList(
-            size: size,
             child: ListView.builder(
               itemCount: products.items.length,
               itemBuilder: (context, index) => ProductCard(
                 product: products.items[index],
                 onPressed: () {},
-                size: size,
               ),
             ),
           ),

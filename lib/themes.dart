@@ -13,6 +13,7 @@ class AppColors {
 
   static const RED_n230 = Color.fromRGBO(230, 82, 82, 1);
   static const RED_n254 = Color.fromRGBO(254, 236, 236, 1);
+  static const RED_n252 = Color.fromRGBO(252, 133, 133, 1);
 }
 
 ThemeData greenTheme(BuildContext context) {
