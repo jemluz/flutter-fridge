@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 class ActionButton extends StatelessWidget {
   const ActionButton({
-    Key key, 
+    Key key,
     @required this.text,
+    @required this.onPressed,
   }) : super(key: key);
 
   final String text;
+  final GestureTapCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
       top: 0,
       child: InkWell(
-        onTap: () {},
+        onTap: onPressed,
         borderRadius: BorderRadius.circular(16),
         highlightColor: Theme.of(context).primaryColor.withOpacity(.2),
         child: Container(

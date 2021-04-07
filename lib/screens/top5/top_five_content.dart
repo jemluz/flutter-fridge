@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/components/custom_list.dart';
+import 'package:fridge/models/products.dart';
+import 'package:provider/provider.dart';
+
+import '../../themes.dart';
+import 'ranking_card.dart';
 
 class TopFiveContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final products = Provider.of<Products>(context);
+
     return SafeArea(
-      child: Text('top 5'),
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          CustomList(
+            size: size,
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) => RankingCard(
+                index: index + 1,
+                product: products.usedRanking[index],
+                onPressed: () => print(products.usedRanking.length),
+                size: size,
+              ),
+            ),
+          ),
+          Positioned(
+            top: size.height * .05,
+            child: Text(
+              '- Mais consumidos - ',
+              style: TextStyle(fontSize: 30),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
