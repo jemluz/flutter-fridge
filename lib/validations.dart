@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Validation {
   static bool isValidImageUrl(String url) {
     bool startsWithHttp = url.toLowerCase().startsWith('http://');
@@ -37,5 +39,13 @@ class Validation {
     if (isInvalid) return 'Informa uma ULR válida.';
 
     return null;
+  }
+
+  static validateForm(GlobalKey<FormState> key) {
+    bool isValid = key.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
   }
 }

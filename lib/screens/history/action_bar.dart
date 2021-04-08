@@ -20,17 +20,15 @@ class ActionBar extends StatelessWidget {
       top: 0,
       child: Row(
         children: [
-          // ActionButton(onPressed: onPressed, text: text),
-          SizedBox(width: 24),
           FilterButton(
-            icon: Icons.remove,
+            icon: 'assets/icons/consume.svg',
             onPressed: onPressedMinus,
             iconColor: Theme.of(context).errorColor,
             bgColor: AppColors.RED_n254,
           ),
-          SizedBox(width: 12),
+          SizedBox(width: 18),
           FilterButton(
-            icon: Icons.add,
+            icon: 'assets/icons/additive.svg',
             onPressed: onPressedPlus,
             iconColor: Theme.of(context).primaryColor,
             bgColor: Theme.of(context).accentColor,
@@ -51,7 +49,7 @@ class FilterButton extends StatelessWidget {
   }) : super(key: key);
 
   final Function onPressed;
-  final IconData icon;
+  final String icon;
   final Color iconColor;
   final Color bgColor;
 
@@ -63,17 +61,14 @@ class FilterButton extends StatelessWidget {
       highlightColor: Theme.of(context).primaryColor.withOpacity(.2),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 12,
+          horizontal: 22,
+          vertical: 16,
         ),
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(
-          icon,
-          color: iconColor,
-        ),
+        child: SvgPicture.asset(icon, color: iconColor, height: 18,),
       ),
     );
   }

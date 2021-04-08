@@ -104,10 +104,16 @@ class TransactionCard extends StatelessWidget {
             color: isAdditive ? Theme.of(context).colorScheme.primary.withOpacity(.05) : Theme.of(context).colorScheme.error.withOpacity(.05),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Text(
-            '$amount unidades',
-            style: TextStyle(
-                color: isAdditive ? Theme.of(context).colorScheme.primary.withOpacity(.8) : Theme.of(context).colorScheme.error.withOpacity(.8), fontSize: 14),
+          child: Row(
+            children: [
+              isAdditive ? SvgPicture.asset('assets/icons/additive.svg', color: Theme.of(context).primaryColor,) : SvgPicture.asset('assets/icons/consume.svg', ),
+              SizedBox(width: 8),
+              Text(
+                '$amount unidades',
+                style: TextStyle(
+                    color: isAdditive ? Theme.of(context).colorScheme.primary.withOpacity(.8) : Theme.of(context).colorScheme.error.withOpacity(.8), fontSize: 14),
+              ),
+            ],
           ),
         ),
       ],

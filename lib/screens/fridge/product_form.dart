@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:fridge/components/error_dialog.dart';
 import 'package:fridge/components/image_preview.dart';
 import 'package:fridge/components/text_input.dart';
 import 'package:fridge/models/product.dart';
@@ -10,16 +11,12 @@ import 'package:provider/provider.dart';
 import '../../themes.dart';
 import '../../validations.dart';
 
-class TransactionForm extends StatefulWidget {
-  final void Function(String, double, DateTime) callDadFunction;
-
-  TransactionForm(this.callDadFunction);
-
+class ProductForm extends StatefulWidget {
   @override
   _TransactionFormState createState() => _TransactionFormState();
 }
 
-class _TransactionFormState extends State<TransactionForm> {
+class _TransactionFormState extends State<ProductForm> {
   DateTime _selectedDate = DateTime.now();
 
   final _nameCtrl = TextEditingController();
@@ -85,21 +82,13 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   void upgradeImageUrl() {
-    // SÓ ALTERA O ESTADO MEDIANTE UMA IMAGEM VÁLIDA
     if (Validation.isValidImageUrl(_imgSrcController.text)) {
       setState(() {});
     }
   }
 
   _submitForm() {
-    var isValid = _addProductForm.currentState.validate();
-
-    if (!isValid) {
-      return;
-    }
-
-    _addProductForm.currentState.save();
-
+    final products = Provider.of<Products>(context, listen: false);
     final newProduct = Product(
       // id: __addProductFormData['id'],
       id: __addProductFormData['id'],
@@ -108,28 +97,25 @@ class _TransactionFormState extends State<TransactionForm> {
       imgSrc: __addProductFormData['imgSrc'],
     );
 
-    setState(() {
-      _isLoading = true;
+    Validation.validateForm(_addProductForm);
+    _addProductForm.currentState.save();
+
+    setState(() => _isLoading = true);
+
+    products.addProduct(newProduct).catchError((error) {
+      return showDialog<Null>(
+        context: context,
+        builder: (ctx) => ErrorDialog(
+          context: context,
+          message: 'Deu ruim na hora de salvar :(',
+        ),
+      );
+    }).then((_) {
+      setState(() => _isLoading = false);
+      Navigator.of(context).pop();
     });
 
-    final products = Provider.of<Products>(context, listen: false);
-
-    if (__addProductFormData['id'] == null) {
-      products.addProduct(newProduct).then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    } else {
-      products.updateProduct(newProduct);
-      setState(() {
-        _isLoading = false;
-      });
-    }
-
-    Navigator.of(context).pop();
-
-    print(newProduct);
+    // print(newProduct);
   }
 
   @override

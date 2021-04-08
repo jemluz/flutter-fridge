@@ -50,6 +50,8 @@ List<Product> demoProducts = [
 ];
 
 class Products with ChangeNotifier {
+  String baseApiUrl =
+      'https://flutter-fridge-default-rtdb.firebaseio.com/products';
   List<Product> _items = demoProducts;
 
   List<Product> get items => [..._items];
@@ -67,79 +69,59 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product newProduct) {
-    const url = 'https://flutter-fridge-default-rtdb.firebaseio.com/products.json';
-    return http.post(
-      url,
-      body: json.encode({
-        'name': newProduct.name,
-        'amount': newProduct.amount,
-        'imgSrc': newProduct.imgSrc,
-        'totalUsed': newProduct.totalUsed,
-        'totalAdded': newProduct.totalAdded,
-      }),
-    ).then((response) { 
-      _items.add(Product(
-        id:  json.decode(response.body)['name'],
-        name: newProduct.name,
-        amount: newProduct.amount,
-        imgSrc: newProduct.imgSrc,
-        totalUsed: newProduct.totalUsed,
-        totalAdded: newProduct.totalAdded,
-      ));
+    final alreadyExists =
+        _items.indexWhere((prod) => prod.name == newProduct.name);
+
+    var body = json.encode({
+      'name': newProduct.name,
+      'amount': newProduct.amount,
+      'imgSrc': newProduct.imgSrc,
+      'totalUsed': newProduct.totalUsed,
+      'totalAdded': newProduct.totalAdded,
+    });
+
+    // update product
+    if (alreadyExists >= 0) {
+      _items[alreadyExists] = newProduct;
       notifyListeners();
-    }).then((_) => null);
-  }
-
-  // Future<void> addProduct(Product newProduct) {
-  //   _items.add(Product(
-  //     id: Random().nextDouble().toString(),
-  //     name: newProduct.name,
-  //     amount: newProduct.amount,
-  //     imgSrc: newProduct.imgSrc,
-  //     totalUsed: newProduct.totalUsed,
-  //     totalAdded: newProduct.totalAdded,
-  //   ));
-  //   notifyListeners();
-  // } // chamado sempre que for feita uma mudança importante, para notificar os componentes interessados
-
-  updateProduct(Product product) {
-    if (product != null && product.id != null) {
-      return;
-    }
-
-    final index = _items.indexWhere((prod) => prod.id == product.id);
-
-    if (index >= 0) {
-      _items[index] = product;
-      notifyListeners();
+    } else {
+      // add product
+      return http.post(baseApiUrl, body: body).then((res) {
+        addProductToItems(res, newProduct);
+        notifyListeners();
+      });
     }
   }
 
-  deleteProduct(String id) {
-    final index = _items.indexWhere((prod) => prod.id == id);
-    if (index >= 0) {
-      _items.removeWhere((prod) => prod.id == id);
-      notifyListeners();
-    }
+  addProductToItems(var res, Product newProduct) {
+    _items.add(Product(
+      id: json.decode(res.body)['name'],
+      name: newProduct.name,
+      amount: newProduct.amount,
+      imgSrc: newProduct.imgSrc,
+      totalUsed: newProduct.totalUsed,
+      totalAdded: newProduct.totalAdded,
+    ));
   }
 
-  // Future<void> addProduct(Product newProduct) {
-  //   const url =
-  //       'https://flutter-loja-41af1-default-rtdb.firebaseio.com/products';
+  // updateProduct(Product product) {
+  //   if (product != null && product.id != null) {
+  //     return;
+  //   }
 
-  //   return http
-  //       .post(
-  //     url,
-  //     body: json.encode({'name': newProduct.name, 'amount': newProduct.amount}),
-  //   )
-  //       .then((response) {
-  //     _items.add(Product(
-  //       id: json.decode(response.body)['name'],
-  //       name: newProduct.name,
-  //       amount: newProduct.amount,
-  //     ));
+  //   final index = _items.indexWhere((prod) => prod.id == product.id);
+
+  //   if (index >= 0) {
+  //     _items[index] = product;
   //     notifyListeners();
-  //   }).then((_) => null);
+  //   }
   // }
 
+  // deleteProduct(String id) {
+  //   final index = _items.indexWhere((prod) => prod.id == id);
+  //   if (index >= 0) {
+  //     _items.removeWhere((prod) => prod.id == id);
+  //     notifyListeners();
+  //   }
+  // }
 }
