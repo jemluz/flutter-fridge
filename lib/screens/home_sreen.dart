@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fridge/components/background.dart';
 import 'package:fridge/components/logo.dart';
 import 'package:fridge/components/menu_button.dart';
+import 'package:fridge/models/products.dart';
 import 'package:fridge/themes.dart';
+import 'package:provider/provider.dart';
 
 import 'fridge/fridge_content.dart';
 import 'history/history_content.dart';

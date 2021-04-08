@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/models/products.dart';
+import 'package:provider/provider.dart';
 
 import '../themes.dart';
 
-class CustomList extends StatelessWidget {
+class CustomList extends StatefulWidget {
   CustomList({
     Key key,
     @required this.child,
   }) : super(key: key);
 
   Widget child;
+
+  @override
+  _CustomListState createState() => _CustomListState();
+}
+
+class _CustomListState extends State<CustomList> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Products>(context, listen: false).loadProducts().then((_) {
+      setState(() => isLoading = false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +42,11 @@ class CustomList extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           height: size.height * .58,
           margin: EdgeInsets.only(top: 60),
-          child: child,
+          child: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : widget.child,
         ),
       ),
     );

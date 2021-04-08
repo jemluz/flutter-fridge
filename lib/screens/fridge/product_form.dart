@@ -100,7 +100,8 @@ class _ProductFormState extends State<ProductForm> {
     setState(() => _isLoading = true);
 
     try {
-      await products.addProduct(newProduct);
+      await products.saveProduct(newProduct);
+      Navigator.of(context).pop();
     } catch(error) {
       await showDialog<Null>(
         context: context,
@@ -111,7 +112,6 @@ class _ProductFormState extends State<ProductForm> {
       );
     } finally {
       setState(() => _isLoading = false);
-      Navigator.of(context).pop();
     }
   }
 

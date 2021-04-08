@@ -17,7 +17,7 @@ class ErrorDialog extends StatelessWidget {
       content: Text(message),
       actions: [
         TextButton(
-          child: Text('FEchar'),
+          child: Text('Fechar'),
           onPressed: () => Navigator.of(context).pop(),
         )
       ],
