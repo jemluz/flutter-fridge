@@ -6,24 +6,33 @@ import 'package:fridge/models/product.dart';
 import 'package:fridge/models/products.dart';
 import 'package:provider/provider.dart';
 
+import '../../enums.dart';
 import '../../validations.dart';
 
 class ProductForm extends StatefulWidget {
+  SubmitType submitType;
+  Product receivedProduct;
+  String dialogTitle;
+
+  ProductForm(
+    this.submitType,
+    this.receivedProduct,
+    this.dialogTitle,
+  );
+
   @override
   _ProductFormState createState() => _ProductFormState();
 }
 
 class _ProductFormState extends State<ProductForm> {
-  // DateTime _selectedDate = DateTime.now();
-
-  final _nameCtrl = TextEditingController();
-  final _amountCtrl = TextEditingController();
-  final _imgSrcController = TextEditingController();
+  TextEditingController _nameCtrl;
+  TextEditingController _amountCtrl;
+  TextEditingController _imgSrcController;
 
   final _imgSrcFocusNode = FocusNode();
 
-  final _addProductForm = GlobalKey<FormState>();
-  final __addProductFormData = Map<String, Object>();
+  final _productForm = GlobalKey<FormState>();
+  final __productFormData = Map<String, Object>();
 
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -45,6 +54,20 @@ class _ProductFormState extends State<ProductForm> {
   void initState() {
     super.initState();
     _imgSrcFocusNode.addListener(upgradeImageUrl);
+
+    _imgSrcController = TextEditingController(text: '');
+
+    final product = widget.receivedProduct;     
+    if (__productFormData.isEmpty && product != null) {
+      __productFormData['id'] = product.id;
+      __productFormData['name'] = product.name;
+      __productFormData['amount'] = product.amount;
+      __productFormData['imgSrc'] = product.imgSrc;
+
+      _nameCtrl = TextEditingController(text: '${product.name}');
+      _amountCtrl = TextEditingController(text: '${product.amount}');
+      _imgSrcController = TextEditingController(text: '${product.imgSrc}');
+    }
   }
 
   @override
@@ -54,55 +77,37 @@ class _ProductFormState extends State<ProductForm> {
     _imgSrcFocusNode.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (__addProductFormData.isEmpty) {
-      final product = ModalRoute.of(context).settings.arguments as Product;
-
-      // navegando com argumentos
-      // Navigator.of(context)
-      //     .pushNamed(AppRoutes.PRODUCT_FORM, arguments: product);
-
-      if (product != null) {
-        __addProductFormData['id'] = product.id;
-        __addProductFormData['name'] = product.name;
-        __addProductFormData['amount'] = product.amount;
-        __addProductFormData['imgSrc'] = product.imgSrc;
-
-        _imgSrcController.text = __addProductFormData['imageUrl'];
-      } else {
-        __addProductFormData['amount'] = '';
-      }
-    }
-  }
-
   void upgradeImageUrl() {
     if (Validation.isValidImageUrl(_imgSrcController.text)) {
       setState(() {});
     }
   }
 
-  Future<void> _submitForm() async{
+  Future<void> _submitForm() async {
     final products = Provider.of<Products>(context, listen: false);
 
-    Validation.validateForm(_addProductForm);
-    _addProductForm.currentState.save();
+    Validation.validateForm(_productForm);
+    _productForm.currentState.save();
 
     final newProduct = Product(
-      id: __addProductFormData['id'],
-      name: __addProductFormData['name'],
-      amount: __addProductFormData['amount'],
-      imgSrc: __addProductFormData['imgSrc'],
+      id: __productFormData['id'],
+      name: __productFormData['name'],
+      amount: __productFormData['amount'],
+      imgSrc: __productFormData['imgSrc'],
     );
 
     setState(() => _isLoading = true);
 
     try {
-      await products.saveProduct(newProduct);
+      if (widget.submitType == SubmitType.save) {
+        await products.saveProduct(newProduct);
+      } else {
+        await products.updateProduct(
+            __productFormData['id'], newProduct);
+      }
+
       Navigator.of(context).pop();
-    } catch(error) {
+    } catch (error) {
       await showDialog<Null>(
         context: context,
         builder: (ctx) => ErrorDialog(
@@ -122,8 +127,8 @@ class _ProductFormState extends State<ProductForm> {
             child: CircularProgressIndicator(),
           )
         : SingleChildScrollView(
-          child: AlertDialog(
-              title: Text('Adicionar item'),
+            child: AlertDialog(
+              title: Text(widget.dialogTitle),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -131,7 +136,8 @@ class _ProductFormState extends State<ProductForm> {
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.resolveWith(getColor),
+                    foregroundColor:
+                        MaterialStateProperty.resolveWith(getColor),
                   ),
                   child: Text(
                     'Cancelar',
@@ -143,7 +149,7 @@ class _ProductFormState extends State<ProductForm> {
               ],
               content: SingleChildScrollView(
                 child: Form(
-                  key: _addProductForm,
+                  key: _productForm,
                   child: Column(
                     children: <Widget>[
                       ImagePreview(imgSrcController: _imgSrcController),
@@ -151,15 +157,17 @@ class _ProductFormState extends State<ProductForm> {
                       TextInput(
                         label: "Nome do Item",
                         ctrl: _nameCtrl,
-                        onSaved: (value) => __addProductFormData['name'] = value,
-                        onValidation: (value) => Validation.nameValidation(value),
+                        onSaved: (value) =>
+                            __productFormData['name'] = value,
+                        onValidation: (value) =>
+                            Validation.nameValidation(value),
                       ),
                       SizedBox(height: 16),
                       TextInput(
                         label: "Quantidade (Und)",
                         ctrl: _amountCtrl,
                         onSaved: (value) =>
-                            __addProductFormData['amount'] = int.parse(value),
+                            __productFormData['amount'] = int.parse(value),
                         onValidation: (value) =>
                             Validation.amountValidation(value),
                         keyboardType: TextInputType.number,
@@ -170,7 +178,7 @@ class _ProductFormState extends State<ProductForm> {
                           ctrl: _imgSrcController,
                           focusNode: _imgSrcFocusNode,
                           onSaved: (value) =>
-                              __addProductFormData['imgSrc'] = value,
+                              __productFormData['imgSrc'] = value,
                           onValidation: (value) =>
                               Validation.imgSrcValidation(value)),
                     ],
@@ -178,6 +186,6 @@ class _ProductFormState extends State<ProductForm> {
                 ),
               ),
             ),
-        );
+          );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fridge/themes.dart';
+
+import 'filter_button.dart';
 
 class ActionBar extends StatelessWidget {
   const ActionBar({
@@ -34,95 +35,6 @@ class ActionBar extends StatelessWidget {
             bgColor: Theme.of(context).accentColor,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class FilterButton extends StatelessWidget {
-  const FilterButton({
-    Key key,
-    @required this.onPressed,
-    @required this.icon,
-    @required this.iconColor,
-    @required this.bgColor,
-  }) : super(key: key);
-
-  final Function onPressed;
-  final String icon;
-  final Color iconColor;
-  final Color bgColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(16),
-      highlightColor: Theme.of(context).primaryColor.withOpacity(.2),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 22,
-          vertical: 16,
-        ),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: SvgPicture.asset(icon, color: iconColor, height: 18,),
-      ),
-    );
-  }
-}
-
-class ActionButton extends StatelessWidget {
-  const ActionButton({
-    Key key,
-    @required this.onPressed,
-    @required this.text,
-  }) : super(key: key);
-
-  final Function onPressed;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(16),
-      highlightColor: Theme.of(context).primaryColor.withOpacity(.2),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 12,
-        ),
-        decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  offset: Offset(0, 0),
-                  blurRadius: 30,
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(.20))
-            ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            SizedBox(width: 10),
-            Text(
-              text,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500),
-            ),
-            SizedBox(width: 10),
-          ],
-        ),
       ),
     );
   }

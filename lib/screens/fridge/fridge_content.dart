@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/models/product.dart';
+import 'package:fridge/models/transaction.dart';
 import 'package:fridge/screens/fridge/action_button.dart';
 import 'package:fridge/components/custom_list.dart';
 import 'package:fridge/models/products.dart';
 import 'package:provider/provider.dart';
 
+import '../../enums.dart';
 import 'product_card.dart';
 import 'product_form.dart';
+import 'transaction_form.dart';
 
 class FridgeContent extends StatefulWidget {
   @override
@@ -13,13 +17,25 @@ class FridgeContent extends StatefulWidget {
 }
 
 class _FridgeContentState extends State<FridgeContent> {
-
-  _showDialog(BuildContext context) {
+  
+  _showProductDialog(BuildContext context, SubmitType type, String dialogTitle,
+      [Product receivedProduct]) {
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (_) {
-          return ProductForm();
+          return ProductForm(type, receivedProduct, dialogTitle);
+        });
+  }
+
+  _showTransactionDialog(
+      BuildContext context, SubmitType type, String dialogTitle,
+      [Product productParent]) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return TransactionForm(type, productParent, dialogTitle);
         });
   }
 
@@ -36,13 +52,25 @@ class _FridgeContentState extends State<FridgeContent> {
               itemCount: products.items.length,
               itemBuilder: (context, index) => ProductCard(
                 product: products.items[index],
-                onPressed: () {},
+                onPressed: () => _showProductDialog(
+                  context,
+                  SubmitType.update,
+                  'Editar item',
+                  products.items[index],
+                ),
+                onButtonPressed: () => _showTransactionDialog(
+                  context,
+                  SubmitType.save,
+                  'Adicionar transação',
+                  products.items[index],
+                ),
               ),
             ),
           ),
           ActionButton(
             text: 'Adicionar item',
-            onPressed: () => _showDialog(context),
+            onPressed: () =>
+                _showProductDialog(context, SubmitType.save, 'Adicionar Item'),
           ),
         ],
       ),

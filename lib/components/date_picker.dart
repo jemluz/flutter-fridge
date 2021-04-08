@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdaptativeDatePicker extends StatelessWidget {
+class DatePicker extends StatelessWidget {
   final DateTime selectedDate;
   final Function(DateTime) onDateChange;
 
-  AdaptativeDatePicker({
+  DatePicker({
     this.selectedDate,
     this.onDateChange,
   });
@@ -29,8 +29,9 @@ class AdaptativeDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      padding: EdgeInsets.only(top: 24),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             selectedDate == null

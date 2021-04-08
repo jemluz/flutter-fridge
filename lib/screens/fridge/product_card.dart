@@ -8,29 +8,33 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     Key key,
     @required this.onPressed,
+    @required this.onButtonPressed,
     @required this.product,
   }) : super(key: key);
 
-  final GestureTapCallback onPressed;
+  final GestureTapCallback onPressed, onButtonPressed;
   final Product product;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-      margin: EdgeInsets.only(bottom: 12, left: 20, right: 20),
-      decoration: cardDecoration(context),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          buildProductImage(context, product.imgSrc),
-          SizedBox(width: size.width * .05),
-          buildProductInfo(product.name, product.amount),
-          Spacer(),
-          buildTransactionButton(context, onPressed),
-        ],
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+        margin: EdgeInsets.only(bottom: 12, left: 20, right: 20),
+        decoration: cardDecoration(context),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            buildProductImage(context, product.imgSrc),
+            SizedBox(width: size.width * .05),
+            buildProductInfo(product.name, product.amount),
+            Spacer(),
+            buildTransactionButton(context, onButtonPressed),
+          ],
+        ),
       ),
     );
   }
@@ -72,9 +76,9 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  InkWell buildTransactionButton(BuildContext context, Function onPressed) {
+  InkWell buildTransactionButton(BuildContext context, Function onButtonPressed) {
     return InkWell(
-      onTap: onPressed,
+      onTap: onButtonPressed,
       borderRadius: BorderRadius.circular(16),
       highlightColor: Theme.of(context).primaryColor.withOpacity(.2),
       child: Container(

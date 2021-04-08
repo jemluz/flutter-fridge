@@ -25,7 +25,7 @@ class TransactionCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              buildDateTime(transaction.date),
+              buildDateTime(DateTime.parse(transaction.date)),
               builInfo(context, transaction.productName, transaction.amount, transaction.isAdditive),
             ],
           ),

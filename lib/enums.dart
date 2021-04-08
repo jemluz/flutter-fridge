@@ -1,0 +1,1 @@
+enum SubmitType { save, update }
