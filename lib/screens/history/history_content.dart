@@ -56,7 +56,7 @@ class _HistoryContentState extends State<HistoryContent> {
 
     int getDisplayedLenght() {
       if (_currentFilter == FilterState.withoutFilter) {
-        return transactions.items.length;
+        return transactions.orderByDate.length;
       }
 
       if (_currentFilter == FilterState.consumeFilter) {
@@ -72,7 +72,7 @@ class _HistoryContentState extends State<HistoryContent> {
 
     List<Transaction> getDisplayedList() {
       if (_currentFilter == FilterState.withoutFilter) {
-        return transactions.items;
+        return transactions.orderByDate;
       }
 
       if (_currentFilter == FilterState.consumeFilter) {

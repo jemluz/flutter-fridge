@@ -20,7 +20,7 @@ class ActionBar extends StatelessWidget {
       top: 0,
       child: Row(
         children: [
-          ActionButton(onPressed: onPressed, text: text),
+          // ActionButton(onPressed: onPressed, text: text),
           SizedBox(width: 24),
           FilterButton(
             icon: Icons.remove,
