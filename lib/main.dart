@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fridge/screens/splash_screen.dart';
+import 'package:fridge/screens/splash/splash_screen.dart';
 import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
