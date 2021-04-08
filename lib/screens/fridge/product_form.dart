@@ -4,6 +4,7 @@ import 'package:fridge/components/image_preview.dart';
 import 'package:fridge/components/text_input.dart';
 import 'package:fridge/models/product.dart';
 import 'package:fridge/models/products.dart';
+import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
 import '../../enums.dart';
@@ -57,7 +58,7 @@ class _ProductFormState extends State<ProductForm> {
 
     _imgSrcController = TextEditingController(text: '');
 
-    final product = widget.receivedProduct;     
+    final product = widget.receivedProduct;
     if (__productFormData.isEmpty && product != null) {
       __productFormData['id'] = product.id;
       __productFormData['name'] = product.name;
@@ -102,8 +103,7 @@ class _ProductFormState extends State<ProductForm> {
       if (widget.submitType == SubmitType.save) {
         await products.saveProduct(newProduct);
       } else {
-        await products.updateProduct(
-            __productFormData['id'], newProduct);
+        await products.updateProduct(__productFormData['id'], newProduct);
       }
 
       Navigator.of(context).pop();
@@ -122,6 +122,8 @@ class _ProductFormState extends State<ProductForm> {
 
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context, listen: false);
+
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),
@@ -157,8 +159,7 @@ class _ProductFormState extends State<ProductForm> {
                       TextInput(
                         label: "Nome do Item",
                         ctrl: _nameCtrl,
-                        onSaved: (value) =>
-                            __productFormData['name'] = value,
+                        onSaved: (value) => __productFormData['name'] = value,
                         onValidation: (value) =>
                             Validation.nameValidation(value),
                       ),
@@ -174,18 +175,71 @@ class _ProductFormState extends State<ProductForm> {
                       ),
                       SizedBox(height: 16),
                       TextInput(
-                          label: "Url da imagem",
-                          ctrl: _imgSrcController,
-                          focusNode: _imgSrcFocusNode,
-                          onSaved: (value) =>
-                              __productFormData['imgSrc'] = value,
-                          onValidation: (value) =>
-                              Validation.imgSrcValidation(value)),
+                        label: "Url da imagem",
+                        ctrl: _imgSrcController,
+                        focusNode: _imgSrcFocusNode,
+                        onSaved: (value) => __productFormData['imgSrc'] = value,
+                        onValidation: (value) =>
+                            Validation.imgSrcValidation(value),
+                      ),
+                      SizedBox(height: 16),
+                      DeleteButton(
+                        onPressed: () =>
+                            products.deleteProduct(widget.receivedProduct.id),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
           );
+  }
+}
+
+class DeleteButton extends StatelessWidget {
+  const DeleteButton({
+    Key key,
+    @required this.onPressed,
+  }) : super(key: key);
+
+  final Function onPressed;
+
+  _showDeleteDialog(BuildContext context, Function onPressed) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return GenericDialog(
+            context: context,
+            title: 'Excluir produto',
+            message: 'Tem certeza que quer excluir este produto?',
+            onPressed: onPressed,
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.RED_n230.withOpacity(.1),
+      child: InkWell(
+        onTap: () => _showDeleteDialog(context, onPressed),
+        highlightColor: AppColors.RED_n230.withOpacity(.1),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.delete, color: AppColors.RED_n230),
+              SizedBox(width: 12),
+              Text(
+                'Excluir produto',
+                style: TextStyle(fontSize: 18, color: AppColors.RED_n230),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
