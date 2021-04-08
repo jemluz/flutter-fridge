@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/screens/splash_screen.dart';
 import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: greenTheme(context),
         home: HomeScreen(),
+        initialRoute: '/splash_screen',
+        routes: {
+          '/home_screen': (ctx) => HomeScreen(),
+          '/splash_screen': (ctx) => SplashScreen(),
+        },
       ),
     );
   }
