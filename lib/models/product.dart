@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
-
-// import 'transaction.dart';
 
 class Product with ChangeNotifier {
   String id ;

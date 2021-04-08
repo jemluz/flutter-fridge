@@ -51,7 +51,7 @@ List<Product> demoProducts = [
 
 class Products with ChangeNotifier {
   String baseApiUrl =
-      'https://flutter-fridge-default-rtdb.firebaseio.com/products';
+      'https://flutter-fridge-default-rtdb.firebaseio.com/products.json';
   List<Product> _items = demoProducts;
 
   List<Product> get items => [..._items];
@@ -91,6 +91,8 @@ class Products with ChangeNotifier {
         notifyListeners();
       });
     }
+
+    return null;
   }
 
   addProductToItems(var res, Product newProduct) {

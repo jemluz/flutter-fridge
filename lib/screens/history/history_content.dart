@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fridge/components/custom_transaction_list.dart';
 import 'package:fridge/models/transaction.dart';
 import 'package:fridge/models/transactions.dart';
-import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'action_bar.dart';

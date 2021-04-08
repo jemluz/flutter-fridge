@@ -3,7 +3,6 @@ import 'package:fridge/components/custom_list.dart';
 import 'package:fridge/models/products.dart';
 import 'package:provider/provider.dart';
 
-import '../../themes.dart';
 import 'ranking_card.dart';
 
 class TopFiveContent extends StatelessWidget {

@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:fridge/models/product.dart';
 import 'package:fridge/screens/fridge/action_button.dart';
 import 'package:fridge/components/custom_list.dart';
 import 'package:fridge/models/products.dart';
