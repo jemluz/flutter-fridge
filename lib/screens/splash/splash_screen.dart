@@ -51,7 +51,7 @@ class _BodyState extends State<Body> {
                 SizedBox(height: 40),
                 Image.asset(
                   'assets/images/fridge-green.png',
-                  width: 250,
+                  width: 230,
                 ),
                 Expanded(
                   flex: 1,

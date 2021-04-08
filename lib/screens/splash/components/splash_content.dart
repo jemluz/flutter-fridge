@@ -17,12 +17,12 @@ class SplashContent extends StatelessWidget {
         Spacer(),
         Text(
           title,
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 30),
         ),
         Text(
           text,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, color: AppColors.GRAY_n135),
+          style: TextStyle(fontSize: 20, color: AppColors.GRAY_n135.withOpacity(.7)),
         ),
         // Spacer(flex: 2),
       ],
