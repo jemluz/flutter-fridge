@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../enums.dart';
 import 'product_card.dart';
 import 'product_form.dart';
-import 'transaction_form.dart';
+import '../../components/transaction_form.dart';
 
 class FridgeContent extends StatefulWidget {
   @override
@@ -17,7 +17,6 @@ class FridgeContent extends StatefulWidget {
 }
 
 class _FridgeContentState extends State<FridgeContent> {
-  
   _showProductDialog(BuildContext context, SubmitType type, String dialogTitle,
       [Product receivedProduct]) {
     showDialog(
@@ -35,7 +34,11 @@ class _FridgeContentState extends State<FridgeContent> {
         context: context,
         barrierDismissible: true,
         builder: (_) {
-          return TransactionForm(type, productParent, dialogTitle);
+          return TransactionForm(
+            submitType: type,
+            productParent: productParent,
+            dialogTitle: dialogTitle,
+          );
         });
   }
 

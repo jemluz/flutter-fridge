@@ -4,40 +4,10 @@ import 'dart:convert';
 
 import 'transaction.dart';
 
-List<Transaction> demoTransactions = [
-  Transaction(
-      productName: 'Couve',
-      amount: 12,
-      isAdditive: true,
-      date: '2021-04-01 20:18:04Z'),
-  Transaction(
-      productName: 'Ovos',
-      amount: 5,
-      isAdditive: true,
-      date: '2021-03-29 20:18:04Z'),
-  Transaction(
-      productName: 'Ovos',
-      amount: 5,
-      isAdditive: false,
-      date: '2021-03-29 20:18:04Z'),
-  Transaction(
-      productName: 'Cenoura',
-      amount: 16,
-      isAdditive: true,
-      date: '2021-03-28 20:18:04Z'),
-  Transaction(
-      productName: 'Maçã', amount: 2, isAdditive: false, date: DateTime.now().toString()),
-  Transaction(
-      productName: 'Couve',
-      amount: 12,
-      isAdditive: true,
-      date: '2021-04-01 20:18:04Z'),
-];
-
 class Transactions with ChangeNotifier {
   final String _baseApiUrl =
       'https://flutter-fridge-default-rtdb.firebaseio.com/transactions';
-  List<Transaction> _items = demoTransactions;
+  List<Transaction> _items = [];
 
   List<Transaction> get items => [..._items];
 
@@ -79,12 +49,13 @@ class Transactions with ChangeNotifier {
       data.forEach((productId, productData) {
         _items.add(Transaction(
           id: productId,
-          productName: productData['name'],
+          productName: productData['productName'],
           amount: productData['amount'],
           date: productData['date'],
           isAdditive: productData['isAdditive'],
         ));
       });
+
       notifyListeners();
     }
 
@@ -92,6 +63,9 @@ class Transactions with ChangeNotifier {
   }
 
   Future<void> saveTransaction(Transaction newTransaction) async {
+    // int oldAmount;
+    // int newAmount;
+
     var body = json.encode({
       'productName': newTransaction.productName,
       'amount': newTransaction.amount,
@@ -99,7 +73,15 @@ class Transactions with ChangeNotifier {
       'isAdditive': newTransaction.isAdditive,
     });
 
-    print(body);
+    // procurar um produto do mesmo nome
+    // var getProductToBalance = _items.indexWhere((transaction) {
+    //   oldAmount = transaction.amount;
+    //   return transaction.id ==   ;
+    // });
+
+    // newAmount = newTransaction.isAdditive
+    //     ? oldAmount + newTransaction.amount
+    //     : oldAmount - newTransaction.amount;
 
     // add product
     final res = await http.post('$_baseApiUrl.json', body: body);
@@ -116,11 +98,12 @@ class Transactions with ChangeNotifier {
   }
 
   Future<void> updateTransaction(String id, Transaction newTransaction) async {
-    var alreadyExists = _items.indexWhere((prod) => prod.id == id);
+    var alreadyExists =
+        _items.indexWhere((transaction) => transaction.id == id);
 
     var body = json.encode({
       'productName': newTransaction.productName,
-      'amount': newTransaction.amount,
+      'amount': newTransaction.date,
       'date': newTransaction.date,
       'isAdditive': newTransaction.isAdditive,
     });

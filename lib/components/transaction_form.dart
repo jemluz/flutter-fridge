@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fridge/components/date_picker.dart';
 import 'package:fridge/components/error_dialog.dart';
@@ -10,22 +8,22 @@ import 'package:fridge/models/transactions.dart';
 import 'package:fridge/screens/history/filter_button.dart';
 import 'package:provider/provider.dart';
 
-import '../../enums.dart';
-import '../../themes.dart';
-import '../../validations.dart';
+import '../enums.dart';
+import '../themes.dart';
+import '../validations.dart';
 
 class TransactionForm extends StatefulWidget {
   SubmitType submitType;
-  // Transaction receivedTransaction;
+  Transaction receivedTransaction;
   Product productParent;
   String dialogTitle;
 
-  TransactionForm(
-    this.submitType,
-    // this.receivedTransaction,
+  TransactionForm({
+    @required this.submitType,
+    @required this.dialogTitle,
+    this.receivedTransaction,
     this.productParent,
-    this.dialogTitle,
-  );
+  });
 
   @override
   _TransactionFormState createState() => _TransactionFormState();
@@ -60,27 +58,12 @@ class _TransactionFormState extends State<TransactionForm> {
   @override
   void initState() {
     super.initState();
-    // final transaction = widget.receivedTransaction;
-
-    // if (__transactionFormData.isEmpty && transaction != null) {
-    //   __transactionFormData['id'] = transaction.id;
-    //   __transactionFormData['productName'] = transaction.productName;
-    //   __transactionFormData['amount'] = transaction.amount;
-    //   __transactionFormData['isAdditive'] = transaction.isAdditive;
-
-    //   _productNameCtrl =
-    //       TextEditingController(text: '${transaction.productName}');
-    //   _amountCtrl = TextEditingController(text: '${transaction.amount}');
-    //   _dateCtrl = transaction.date;
-    //   _isAdditiveCtrl = transaction.isAdditive;
-    // } else {
-    //   _dateCtrl = DateTime.now();
-    //   _isAdditiveCtrl = true;
-    // }
-
     final productParent = widget.productParent;
+    final transaction = widget.receivedTransaction;
 
-    if (__transactionFormData.isEmpty && productParent != null) {
+    // to add transaction modal (receive a product)
+    if (__transactionFormData.isEmpty && productParent != null ||
+        widget.submitType == SubmitType.save) {
       _productNameCtrl = TextEditingController(text: '${productParent.name}');
       _amountCtrl = TextEditingController(text: '${productParent.amount}');
 
@@ -89,6 +72,27 @@ class _TransactionFormState extends State<TransactionForm> {
       __transactionFormData['date'] = _date;
       __transactionFormData['isAdditive'] = _isAdditive;
     }
+
+    // to update trasaction modal (receive a transaction)
+    if (__transactionFormData.isEmpty && transaction != null ||
+        widget.submitType == SubmitType.update) {
+      __transactionFormData['id'] = transaction.id;
+      __transactionFormData['productName'] = transaction.productName;
+      __transactionFormData['amount'] = transaction.amount;
+      __transactionFormData['isAdditive'] = transaction.isAdditive;
+      __transactionFormData['date'] = transaction.date;
+
+      _productNameCtrl =
+          TextEditingController(text: '${transaction.productName}');
+      _amountCtrl = TextEditingController(text: '${transaction.amount}');
+    }
+  }
+
+  _setTransactionType(bool value) {
+    setState(() {
+      _isAdditive = value;
+      __transactionFormData['isAdditive'] = _isAdditive;
+    });
   }
 
   Future<void> _submitForm() async {
@@ -102,42 +106,33 @@ class _TransactionFormState extends State<TransactionForm> {
       productName: __transactionFormData['productName'],
       amount: __transactionFormData['amount'],
       date: __transactionFormData['date'].toString(),
-      isAdditive:  __transactionFormData['isAdditive'],
+      isAdditive: __transactionFormData['isAdditive'],
     );
 
     print(__transactionFormData);
 
-    await transactions.saveTransaction(newTransaction);
-    Navigator.of(context).pop();
+    setState(() => _isLoading = true);
 
-    // print(newTransaction.id);
-    // print(newTransaction.productName);
-    // print(newTransaction.amount);
-    // print(newTransaction.date);
-    // print(newTransaction.isAdditive);
+    try {
+      if (widget.submitType == SubmitType.save && newTransaction.id == null) {
+        await transactions.saveTransaction(newTransaction);
+      } else {
+        await transactions.updateTransaction(
+            __transactionFormData['id'], newTransaction);
+      }
 
-    // setState(() => _isLoading = true);
-
-    //   try {
-    //     if (widget.submitType == SubmitType.save && newTransaction.id == null) {
-    //       await transactions.saveTransaction(newTransaction);
-    //     } else {
-    //       await transactions.updateTransaction(
-    //           __transactionFormData['id'], newTransaction);
-    //     }
-
-    //     Navigator.of(context).pop();
-    //   } catch (error) {
-    //     await showDialog<Null>(
-    //       context: context,
-    //       builder: (ctx) => ErrorDialog(
-    //         context: context,
-    //         message: error,
-    //       ),
-    //     );
-    //   } finally {
-    //     setState(() => _isLoading = false);
-    //   }
+      Navigator.of(context).pop();
+    } catch (error) {
+      await showDialog<Null>(
+        context: context,
+        builder: (ctx) => ErrorDialog(
+          context: context,
+          message: error,
+        ),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -203,8 +198,7 @@ class _TransactionFormState extends State<TransactionForm> {
                             children: <Widget>[
                               FilterButton(
                                 icon: 'assets/icons/additive.svg',
-                                onPressed: () =>
-                                    __transactionFormData['isAdditive'] = true,
+                                onPressed: () => _setTransactionType(true),
                                 iconColor: _isAdditive
                                     ? Theme.of(context).primaryColor
                                     : AppColors.GRAY_n135,
@@ -215,8 +209,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               SizedBox(width: 18),
                               FilterButton(
                                 icon: 'assets/icons/consume.svg',
-                                onPressed: () =>
-                                    __transactionFormData['isAdditive'] = false,
+                                onPressed: () => _setTransactionType(false),
                                 iconColor: _isAdditive
                                     ? AppColors.GRAY_n135
                                     : Theme.of(context).errorColor,

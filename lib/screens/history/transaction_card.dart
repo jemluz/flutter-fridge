@@ -17,25 +17,28 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18),
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              buildDateTime(DateTime.parse(transaction.date)),
-              builInfo(context, transaction.productName, transaction.amount, transaction.isAdditive),
-            ],
-          ),
-          SizedBox(height: 20),
-          Divider(
-            color: AppColors.GRAY_n141.withOpacity(.4), 
-            height: 4,
-          ),
-          SizedBox(height: 20),
-        ],
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 18),
+        margin: EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                buildDateTime(DateTime.parse(transaction.date)),
+                builInfo(context, transaction.productName, transaction.amount, transaction.isAdditive),
+              ],
+            ),
+            SizedBox(height: 20),
+            Divider(
+              color: AppColors.GRAY_n141.withOpacity(.4), 
+              height: 4,
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

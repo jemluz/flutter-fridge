@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fridge/components/custom_transaction_list.dart';
+import 'package:fridge/models/product.dart';
+import 'package:fridge/models/products.dart';
 import 'package:fridge/models/transaction.dart';
 import 'package:fridge/models/transactions.dart';
+import 'package:fridge/components/transaction_form.dart';
 import 'package:provider/provider.dart';
 
+import '../../enums.dart';
 import 'action_bar.dart';
 import 'filter_tag.dart';
 import 'transaction_card.dart';
@@ -49,9 +53,26 @@ class _HistoryContentState extends State<HistoryContent> {
     });
   }
 
+  _showTransactionDialog(BuildContext context, SubmitType type,
+      String dialogTitle, Transaction transaction,
+      [Product productParent]) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return TransactionForm(
+            submitType: type,
+            receivedTransaction: transaction,
+            productParent: productParent,
+            dialogTitle: dialogTitle,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final transactions = Provider.of<Transactions>(context);
+    final products = Provider.of<Products>(context);
 
     int getDisplayedLenght() {
       if (_currentFilter == FilterState.withoutFilter) {
@@ -90,11 +111,20 @@ class _HistoryContentState extends State<HistoryContent> {
         alignment: Alignment.center,
         children: <Widget>[
           CustomTransactionList(
-            isTagsDisplayed: _currentFilter == FilterState.withoutFilter ? true : false,
+            isTagsDisplayed:
+                _currentFilter == FilterState.withoutFilter ? true : false,
             child: ListView.builder(
               itemCount: getDisplayedLenght(),
               itemBuilder: (context, index) => TransactionCard(
                 transaction: getDisplayedList()[index],
+                onPressed: () => 
+                _showTransactionDialog(
+                  context,
+                  SubmitType.update,
+                  'Editar transação',
+                  getDisplayedList()[index],
+                  products.items[index],
+                ),
               ),
             ),
           ),
@@ -116,5 +146,3 @@ class _HistoryContentState extends State<HistoryContent> {
     );
   }
 }
-
-

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fridge/screens/splash/splash_screen.dart';
 import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'models/products.dart';
 import 'models/transactions.dart';
 import 'screens/home_sreen.dart';
+import 'screens/splash_screen/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
