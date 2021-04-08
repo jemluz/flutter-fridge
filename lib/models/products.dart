@@ -11,7 +11,7 @@ List<Product> demoProducts = [
     id: Random().nextDouble().toString(),
     name: 'Couve',
     amount: 6,
-    imgSrc: 'assets/images/couve.png',
+    imgSrc: 'https://assets.instabuy.com.br/ib.item.image.medium/m-761f9db66b0f4f10904263e1b120e8e6.jpeg',
     totalAdded: 100,
     totalUsed: 12,
   ),
@@ -19,7 +19,7 @@ List<Product> demoProducts = [
     id: Random().nextDouble().toString(),
     name: 'Cebola',
     amount: 4,
-    imgSrc: 'assets/images/cebola.png',
+    imgSrc: 'https://assets.instabuy.com.br/ib.item.image.medium/m-b73f139405b748fdaf1615dba491894e.jpeg',
     totalAdded: 100,
     totalUsed: 12,
   ),
@@ -27,7 +27,7 @@ List<Product> demoProducts = [
     id: Random().nextDouble().toString(),
     name: 'Cenoura',
     amount: 7,
-    imgSrc: 'assets/images/cenoura.png',
+    imgSrc: 'https://assets.instabuy.com.br/ib.item.image.medium/m-c5c75f72467b4089997934c21a6295cd.jpeg',
     totalAdded: 100,
     totalUsed: 10,
   ),
@@ -35,7 +35,7 @@ List<Product> demoProducts = [
     id: Random().nextDouble().toString(),
     name: 'Maçã',
     amount: 12,
-    imgSrc: 'assets/images/maca.png',
+    imgSrc: 'https://assets.instabuy.com.br/ib.item.image.medium/m-edc6efc8547b47a8829f2997e45a9421.png',
     totalAdded: 100,
     totalUsed: 71,
   ),
@@ -43,7 +43,7 @@ List<Product> demoProducts = [
     id: Random().nextDouble().toString(),
     name: 'Ovos',
     amount: 30,
-    imgSrc: 'assets/images/ovos.png',
+    imgSrc: 'https://assets.instabuy.com.br/ib.item.image.medium/m-4f6d958f593c4d07892a0dbee10197a8.png',
     totalAdded: 100,
     totalUsed: 67,
   ),
@@ -51,7 +51,7 @@ List<Product> demoProducts = [
 
 class Products with ChangeNotifier {
   String baseApiUrl =
-      'https://flutter-fridge-default-rtdb.firebaseio.com/products.json';
+      'https://flutter-fridge-default-rtdb.firebaseio.com/products';
   List<Product> _items = demoProducts;
 
   List<Product> get items => [..._items];
@@ -68,7 +68,7 @@ class Products with ChangeNotifier {
     return ranking;
   }
 
-  Future<void> addProduct(Product newProduct) {
+  Future<void> addProduct(Product newProduct) async {
     final alreadyExists =
         _items.indexWhere((prod) => prod.name == newProduct.name);
 
@@ -86,10 +86,9 @@ class Products with ChangeNotifier {
       notifyListeners();
     } else {
       // add product
-      return http.post(baseApiUrl, body: body).then((res) {
-        addProductToItems(res, newProduct);
-        notifyListeners();
-      });
+      final res = await http.post(baseApiUrl, body: body);
+      addProductToItems(res, newProduct);
+      notifyListeners();
     }
 
     return null;

@@ -17,7 +17,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       margin: EdgeInsets.only(bottom: 12, left: 20, right: 20),
@@ -55,11 +55,7 @@ class ProductCard extends StatelessWidget {
     return Container(
       width: size.width * .15,
       height: size.width * .15,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        alignment: Alignment.topCenter,
-        image: AssetImage(image),
-      )),
+      child: Image.network(image),
     );
   }
 

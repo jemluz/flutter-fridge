@@ -84,7 +84,7 @@ class _ProductFormState extends State<ProductForm> {
     }
   }
 
-  _submitForm() {
+  Future<void> _submitForm() async{
     final products = Provider.of<Products>(context, listen: false);
 
     Validation.validateForm(_addProductForm);
@@ -97,24 +97,22 @@ class _ProductFormState extends State<ProductForm> {
       imgSrc: __addProductFormData['imgSrc'],
     );
 
-
-
     setState(() => _isLoading = true);
 
-    products.addProduct(newProduct).catchError((error) {
-      return showDialog<Null>(
+    try {
+      await products.addProduct(newProduct);
+    } catch(error) {
+      await showDialog<Null>(
         context: context,
         builder: (ctx) => ErrorDialog(
           context: context,
           message: 'Deu ruim na hora de salvar :(',
         ),
       );
-    }).then((_) {
+    } finally {
       setState(() => _isLoading = false);
       Navigator.of(context).pop();
-    });
-
-    // print(newProduct);
+    }
   }
 
   @override

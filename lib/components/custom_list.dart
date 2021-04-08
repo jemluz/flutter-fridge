@@ -23,8 +23,8 @@ class CustomList extends StatelessWidget {
       child: SingleChildScrollView(
         child: Container(
           alignment: Alignment.bottomCenter,
-          height: size.height * .6,
-          margin: EdgeInsets.only(top: 70),
+          height: size.height * .58,
+          margin: EdgeInsets.only(top: 60),
           child: child,
         ),
       ),

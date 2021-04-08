@@ -49,11 +49,7 @@ class RankingCard extends StatelessWidget {
     return Container(
       width: size.width * .15,
       height: size.width * .15,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        alignment: Alignment.topCenter,
-        image: AssetImage(image),
-      )),
+      child: Image.network(image),
     );
   }
 
