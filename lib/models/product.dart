@@ -10,8 +10,8 @@ class Product with ChangeNotifier {
   String imgSrc;
   int amount;
 
-  int totalUsed = 0;
-  int totalAdded = 0;
+  int totalUsed;
+  int totalAdded;
 
   Product({
     this.id,

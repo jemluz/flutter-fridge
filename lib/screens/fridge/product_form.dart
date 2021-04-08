@@ -108,13 +108,6 @@ class _TransactionFormState extends State<TransactionForm> {
       imgSrc: __addProductFormData['imgSrc'],
     );
 
-    // final newTransaction = Product(
-    //   id: __addProductFormData['id'],
-    //   name: __addProductFormData['nome'],
-    //   amount: __addProductFormData['amount'],
-    //   imgSrc: __addProductFormData['imgSrc'],
-    // );
-
     setState(() {
       _isLoading = true;
     });
@@ -126,15 +119,15 @@ class _TransactionFormState extends State<TransactionForm> {
         setState(() {
           _isLoading = false;
         });
-        Navigator.of(context).pop();
       });
     } else {
       products.updateProduct(newProduct);
       setState(() {
         _isLoading = false;
       });
-      Navigator.of(context).pop();
     }
+
+    Navigator.of(context).pop();
 
     print(newProduct);
   }

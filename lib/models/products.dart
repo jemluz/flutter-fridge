@@ -68,6 +68,7 @@ class Products with ChangeNotifier {
 
   Future<void> addProduct(Product newProduct) {
     const url = 'https://flutter-loja-41af1-default-rtdb.firebaseio.com/products';
+    const url = 'https://flutter-fridge-default-rtdb.firebaseio.com/products.json';
     return http.post(
       url,
       body: json.encode({
