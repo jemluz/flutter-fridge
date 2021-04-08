@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -50,8 +48,8 @@ import 'product.dart';
 // ];
 
 class Products with ChangeNotifier {
-  final String _apiUrl =
-      'https://flutter-fridge-default-rtdb.firebaseio.com/products.json';
+  final String _baseApiUrl =
+      'https://flutter-fridge-default-rtdb.firebaseio.com/products';
   List<Product> _items = [];
 
   List<Product> get items => [..._items];
@@ -69,10 +67,11 @@ class Products with ChangeNotifier {
   }
 
   Future<void> loadProducts() async {
-    final res = await http.get(_apiUrl);
+    final res = await http.get('$_baseApiUrl.json');
     Map<String, dynamic> data = json.decode(res.body);
 
-    if(data != null) {
+    _items.clear();
+    if (data != null) {
       data.forEach((productId, productData) {
         addProductToLocalItems(
           id: productId,
@@ -103,11 +102,11 @@ class Products with ChangeNotifier {
 
     // update product
     if (alreadyExists >= 0) {
-      _items[alreadyExists] = newProduct;
-      notifyListeners();
+      var error =  'Calma lá... já existe um produto cadastrado com esse nome ';
+      throw error;
     } else {
       // add product
-      final res = await http.post(_apiUrl, body: body);
+      final res = await http.post('$_baseApiUrl.json', body: body);
       var id = json.decode(res.body)['name'];
 
       addProductToLocalItems(
@@ -124,7 +123,33 @@ class Products with ChangeNotifier {
     return null;
   }
 
-  addProductToLocalItems({String id, String name, int amount, String imgSrc, int totalUsed, int totalAdded}) {
+  Future<void> updateProduct(String id, Product newProduct) async {
+    var alreadyExists = _items.indexWhere((prod) => prod.id == id);
+
+    var body = json.encode({
+      'name': newProduct.name,
+      'amount': newProduct.amount,
+      'imgSrc': newProduct.imgSrc,
+      'totalUsed': newProduct.totalUsed,
+      'totalAdded': newProduct.totalAdded,
+    });
+
+    if (alreadyExists >= 0) {
+      await http.patch('$_baseApiUrl/$id.json', body: body);
+      _items[alreadyExists] = newProduct;
+      notifyListeners();
+    }
+
+    return null;
+  }
+
+  addProductToLocalItems(
+      {String id,
+      String name,
+      int amount,
+      String imgSrc,
+      int totalUsed,
+      int totalAdded}) {
     _items.add(Product(
       id: id,
       name: name,
@@ -134,5 +159,4 @@ class Products with ChangeNotifier {
       totalAdded: totalAdded,
     ));
   }
-
 }

@@ -107,7 +107,7 @@ class _ProductFormState extends State<ProductForm> {
         context: context,
         builder: (ctx) => ErrorDialog(
           context: context,
-          message: 'Deu ruim na hora de salvar :(',
+          message: error,
         ),
       );
     } finally {

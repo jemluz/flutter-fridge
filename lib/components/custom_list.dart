@@ -19,6 +19,10 @@ class CustomList extends StatefulWidget {
 class _CustomListState extends State<CustomList> {
   bool isLoading = true;
 
+  Future<void> _refreshProducts(BuildContext context) async {
+    return Provider.of<Products>(context, listen: false).loadProducts();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,15 +42,19 @@ class _CustomListState extends State<CustomList> {
       padding: EdgeInsets.symmetric(horizontal: size.width * .05),
       decoration: backgroundDecoration(),
       child: SingleChildScrollView(
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          height: size.height * .58,
-          margin: EdgeInsets.only(top: 60),
-          child: isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : widget.child,
+        child: RefreshIndicator(
+          onRefresh: () => _refreshProducts(context),
+          backgroundColor: Theme.of(context).primaryColor,
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            height: size.height * .58,
+            margin: EdgeInsets.only(top: 60),
+            child: isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : widget.child,
+          ),
         ),
       ),
     );
