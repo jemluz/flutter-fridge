@@ -7,20 +7,18 @@ class Product with ChangeNotifier {
   int amount;
 
   int totalUsed;
-  int totalAdded;
 
   Product({
     this.id,
     @required this.name,
     @required this.amount,
     @required this.imgSrc,
-    this.totalAdded = 0,
     this.totalUsed = 0,
   });
 
   @override
   String toString() {
-    return '{ ${this.id}, ${this.name}, ${this.amount}, ${this.imgSrc}, ${this.totalAdded}, ${this.totalUsed}, }';
+    return '{ ${this.id}, ${this.name}, ${this.amount}, ${this.imgSrc}, ${this.totalUsed}, }';
   }
 
   // int get totalUsed {

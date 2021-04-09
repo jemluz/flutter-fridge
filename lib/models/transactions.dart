@@ -152,8 +152,6 @@ class Transactions with ChangeNotifier {
 
     if (newTransaction.isAdditive) {
       newProductAmount += newTransaction.amount;
-
-      parentProduct.totalAdded = newTransactionAmount;
     }
 
     if (!newTransaction.isAdditive && newTransaction.amount <= oldProductAmount) {
@@ -176,7 +174,6 @@ class Transactions with ChangeNotifier {
       'amount': newProductAmount,
       'imgSrc': parentProduct.imgSrc,
       'totalUsed': parentProduct.totalUsed,
-      'totalAdded': parentProduct.totalAdded,
     });
 
     if (getProductIndex >= 0) {

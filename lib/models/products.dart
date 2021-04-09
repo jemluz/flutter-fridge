@@ -37,7 +37,6 @@ class Products with ChangeNotifier {
           amount: productData['amount'],
           imgSrc: productData['imgSrc'],
           totalUsed: productData['totalUsed'],
-          totalAdded: productData['totalAdded'],
         ));
       });
       notifyListeners();
@@ -55,7 +54,6 @@ class Products with ChangeNotifier {
       'amount': newProduct.amount,
       'imgSrc': newProduct.imgSrc,
       'totalUsed': newProduct.totalUsed,
-      'totalAdded': newProduct.totalAdded,
     });
 
     // update product
@@ -72,7 +70,6 @@ class Products with ChangeNotifier {
         amount: newProduct.amount,
         imgSrc: newProduct.imgSrc,
         totalUsed: newProduct.totalUsed,
-        totalAdded: newProduct.totalAdded,
       ));
       notifyListeners();
     }
@@ -88,7 +85,6 @@ class Products with ChangeNotifier {
       'amount': newProduct.amount,
       'imgSrc': newProduct.imgSrc,
       'totalUsed': newProduct.totalUsed,
-      'totalAdded': newProduct.totalAdded,
     });
 
     if (alreadyExists >= 0) {
