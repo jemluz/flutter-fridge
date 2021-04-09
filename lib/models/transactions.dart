@@ -150,23 +150,24 @@ class Transactions with ChangeNotifier {
     }
 
     if (newTransaction.isAdditive) {
-      print('botou: $newProductAmount = $oldProductAmount + ${newTransaction.amount}');
       newProductAmount += newTransaction.amount;
-      // print(newProductAmount);
+
+      parentProduct.totalAdded = newTransactionAmount;
     }
 
-    if (!newTransaction.isAdditive &&
-        newTransaction.amount <= oldProductAmount) {
-      print('tirou: $newProductAmount = $oldProductAmount - ${newTransaction.amount}');
+    if (!newTransaction.isAdditive && newTransaction.amount <= oldProductAmount) {
       newProductAmount -= newTransaction.amount;
-      // print(newProductAmount);
+
+      parentProduct.totalUsed += newTransactionAmount;
     }
 
-    if (!newTransaction.isAdditive &&
-        newTransaction.amount > oldProductAmount) {
+    if (!newTransaction.isAdditive && newTransaction.amount > oldProductAmount) {
       newTransaction.amount = oldProductAmount;
       newTransactionAmount = oldProductAmount;
+
       newProductAmount = oldProductAmount - newTransaction.amount;
+
+      parentProduct.totalUsed += newTransactionAmount;
     }
 
     var body = json.encode({

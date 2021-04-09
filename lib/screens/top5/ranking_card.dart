@@ -62,7 +62,7 @@ class RankingCard extends StatelessWidget {
           name,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text('$amount unidades', style: TextStyle(color: AppColors.GRAY_n141.withOpacity(.8)),),
+        Text('$amount consumidos', style: TextStyle(color: AppColors.GRAY_n141.withOpacity(.8)),),
       ],
     );
   }

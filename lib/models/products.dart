@@ -43,8 +43,6 @@ class Products with ChangeNotifier {
       notifyListeners();
     }
 
-    print('atualizou');
-
     return Future.value(_items);
   }
 
