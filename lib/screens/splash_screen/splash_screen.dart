@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridge/components/background.dart';
 import 'package:fridge/components/logo.dart';
 
+import '../../themes.dart';
 import 'components/navigation.dart';
 import 'components/splash_content.dart';
 
@@ -50,7 +51,7 @@ class _BodyState extends State<Body> {
                 Logo(),
                 SizedBox(height: 40),
                 Image.asset(
-                  'assets/images/fridge-green.png',
+                  Theme.of(context).primaryColor == AppColors.YELLOW_n119 ? 'assets/images/fridge-white.png' : 'assets/images/fridge-green.png',
                   width: 230,
                 ),
                 Expanded(

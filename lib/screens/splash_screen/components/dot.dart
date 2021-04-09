@@ -17,8 +17,7 @@ class Dot extends StatelessWidget {
       margin: EdgeInsets.only(right: 5),
       duration: Duration(seconds: 1),
       decoration: BoxDecoration(
-        color:
-            currentPage == index ? AppColors.GREEN_n51 : AppColors.GREEN_n234,
+        color: currentPage == index ? Theme.of(context).primaryColor : Theme.of(context).accentColor,
         borderRadius: BorderRadius.circular(3),
       ),
     );

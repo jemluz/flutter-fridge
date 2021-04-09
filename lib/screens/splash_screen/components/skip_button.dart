@@ -20,7 +20,7 @@ class SkipButton extends StatelessWidget {
         width: size.width * .26,
         padding: EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-            color: AppColors.GREEN_n234,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -28,12 +28,12 @@ class SkipButton extends StatelessWidget {
             Text(
               'Pular',
               style: TextStyle(
-                  fontSize: 20, color: AppColors.GREEN_n0),
+                  fontSize: 20, color: Theme.of(context).primaryColor),
             ),
             SizedBox(width: 8),
             Icon(
               Icons.arrow_forward_ios,
-              color: AppColors.GREEN_n0,
+              color: Theme.of(context).primaryColor,
               size: 16,
             ),
           ],

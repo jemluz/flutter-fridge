@@ -1,46 +1,40 @@
 {
     "products" : {
       "-MXlKL8mMR0xfxo8OFU3" : {
-        "amount" : 7,
+        "amount" : 14,
         "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-c5c75f72467b4089997934c21a6295cd.jpeg",
         "name" : "Cenoura",
-        "totalAdded" : 12,
-        "totalUsed" : 3
+        "totalUsed" : 0
       },
       "-MXlMSA2OoJaKivBgi9t" : {
         "amount" : 30,
         "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-4f6d958f593c4d07892a0dbee10197a8.png",
         "name" : "Ovos",
-        "totalAdded" : 90,
-        "totalUsed" : 67
+        "totalUsed" : 0
       },
       "-MXmp1EbwrZzU6N1RWvm" : {
-        "amount" : 9,
+        "amount" : 6,
         "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-5e2d7ad5a7124b4b8d2b0ddde7603199.jpg",
         "name" : "Uva",
-        "totalAdded" : 46,
-        "totalUsed" : 30
+        "totalUsed" : 0
       },
       "-MXn9N9SvCKyqmOQxDPl" : {
         "amount" : 3,
         "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-edc6efc8547b47a8829f2997e45a9421.png",
         "name" : "Maça",
-        "totalAdded" : 124,
-        "totalUsed" : 71
+        "totalUsed" : 0
       },
       "-MXnOaQIjh69GMwH8WFm" : {
-        "amount" : 5,
+        "amount" :21,
         "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-a8216bc5a2ed44c8adf782d6c1d696d1.jpeg",
         "name" : "Abacate",
-        "totalAdded" : 23,
-        "totalUsed" : 16
+        "totalUsed" : 0
       },
       "--MXnP-NOIqez3uELRwsd" : {
         "amount" : 16,
         "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-137000354e9c486ca5d5d0b52b315b51.jpeg",
         "name" : "Tomate",
-        "totalAdded" : 51,
-        "totalUsed" : 48
+        "totalUsed" : 0
       }
     },
     "transactions" : {

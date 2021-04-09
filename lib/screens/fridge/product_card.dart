@@ -87,9 +87,9 @@ class ProductCard extends StatelessWidget {
           vertical: 16,
         ),
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(.1),
+            color: Theme.of(context).primaryColor == AppColors.YELLOW_n119 ? Theme.of(context).accentColor.withOpacity(.7) : Theme.of(context).colorScheme.primary.withOpacity(.1),
             borderRadius: BorderRadius.circular(12)),
-        child: SvgPicture.asset('assets/icons/exchange.svg'),
+        child: SvgPicture.asset('assets/icons/exchange.svg', color: Theme.of(context).primaryColor,),
       ),
     );
   }

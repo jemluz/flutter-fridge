@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/models/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'dot.dart';
 import 'skip_button.dart';
@@ -17,6 +19,8 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeProvider>(context);
+
     return Expanded(
       flex: 2,
       child: Padding(
@@ -33,6 +37,12 @@ class Navigation extends StatelessWidget {
             ),
             Spacer(),
             SkipButton(size: size),
+            Checkbox(
+              value: theme.isWhiteTheme,
+              onChanged: (bool value) {
+                theme.setWhiteTheme = value;
+              },
+            ),
             Spacer(),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/models/theme.dart';
 import 'package:fridge/themes.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +12,28 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeProvider themeChangeProvider = new ThemeProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentAppTheme();
+    themeChangeProvider.addListener(() {
+      setState(() {});
+    });
+  }
+
+  void getCurrentAppTheme() async {
+    themeChangeProvider.setWhiteTheme = await themeChangeProvider.themePreference.getTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -23,9 +44,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => new Transactions(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => themeChangeProvider,
+        ),
       ],
       child: MaterialApp(
-        theme: greenTheme(context),
+        debugShowCheckedModeBanner: false,
+        theme: Styles.themeData(themeChangeProvider.isWhiteTheme, context),
         home: HomeScreen(),
         initialRoute: '/splash_screen',
         routes: {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge/themes.dart';
 
 class Background extends StatelessWidget {
   const Background({
@@ -11,7 +12,7 @@ class Background extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           alignment: Alignment.topCenter,
-          image: AssetImage('assets/images/green-bg.png'),
+          image: Theme.of(context).primaryColor == AppColors.YELLOW_n119 ? AssetImage('assets/images/white-bg.png') : AssetImage('assets/images/green-bg.png'),
         ),
       ),
     );
