@@ -22,7 +22,6 @@ class Transactions with ChangeNotifier {
     List<Transaction> filteredList = [..._items];
     filteredList.retainWhere((prod) => prod.isAdditive == false);
     filteredList.sort((a, b) => b.date.compareTo(a.date));
-    // print(filteredList);
 
     notifyListeners();
     return filteredList;
@@ -33,8 +32,6 @@ class Transactions with ChangeNotifier {
     filteredList.retainWhere((prod) => prod.isAdditive == true);
     filteredList.sort((a, b) => b.date.compareTo(a.date));
 
-    // print(filteredList);
-
     notifyListeners();
     return filteredList;
   }
@@ -42,7 +39,6 @@ class Transactions with ChangeNotifier {
   List<Transaction> get orderByDate {
     List<Transaction> filteredList = [..._items];
     filteredList.sort((a, b) => b.date.compareTo(a.date));
-    // print(filteredList);
     notifyListeners();
     return filteredList;
   }
@@ -95,7 +91,7 @@ class Transactions with ChangeNotifier {
   }
 
   Future<void> updateTransaction(String id, Transaction newTransaction) async {
-    products.loadProducts();
+    products.loadProducts().then((value) => null);
 
     updateProductAmount(newTransaction);
 
@@ -103,7 +99,7 @@ class Transactions with ChangeNotifier {
 
     var body = json.encode({
       'productName': newTransaction.productName,
-      'amount': newTransaction.amount,
+      'amount': newTransactionAmount,
       'date': newTransaction.date,
       'isAdditive': newTransaction.isAdditive,
     });
@@ -142,12 +138,16 @@ class Transactions with ChangeNotifier {
 
     newTransactionAmount = newTransaction.amount;
 
+    products.loadProducts().then((value) => null);
+
     getProductIndex = products.items.indexWhere((prod) => prod.name == newTransaction.productName);
 
     if (getProductIndex >= 0) {
+      print('parentProduct: $parentProduct');
       parentProduct = products.items[getProductIndex];
       oldProductAmount = parentProduct.amount;
       newProductAmount = parentProduct.amount;
+
     }
 
     if (newTransaction.isAdditive) {
@@ -175,6 +175,8 @@ class Transactions with ChangeNotifier {
       'imgSrc': parentProduct.imgSrc,
       'totalUsed': parentProduct.totalUsed,
     });
+
+    print(body);
 
     if (getProductIndex >= 0) {
       await http.patch('$_baseApiUrl/products/${parentProduct.id}.json', body: body);

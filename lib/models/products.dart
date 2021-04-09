@@ -19,8 +19,6 @@ class Products with ChangeNotifier {
   List<Product> get usedRanking {
     List<Product> ranking = [..._items];
     ranking.sort((a, b) => b.totalUsed.compareTo(a.totalUsed));
-    // print('Sort by Age: ' + list.toString());
-    print(ranking);
     return ranking;
   }
 
