@@ -5,7 +5,9 @@ import 'dart:convert';
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final String _baseApiUrl = 'https://flutter-fridge-default-rtdb.firebaseio.com/products';
+  final String _baseApiUrl = 'https://flutter-fridge-default-rtdb.firebaseio.com';
+  final String _colection = '/products';
+
   List<Product> _items = [];
 
   List<Product> get items => [..._items];
@@ -22,16 +24,8 @@ class Products with ChangeNotifier {
     return ranking;
   }
 
-  Product loadProduct(String id) {
-    final alreadyExists = _items.indexWhere((prod) => prod.id == id);
-
-    if(alreadyExists >= 0) {
-      return _items[alreadyExists];
-    }
-  }
-
-  Future<void> loadProducts() async {
-    final res = await http.get('$_baseApiUrl.json');
+  Future<List<Product>> loadProducts() async {
+    final res = await http.get('$_baseApiUrl$_colection.json');
     Map<String, dynamic> data = json.decode(res.body);
 
     _items.clear();
@@ -49,7 +43,9 @@ class Products with ChangeNotifier {
       notifyListeners();
     }
 
-    return Future.value();
+    print('atualizou');
+
+    return Future.value(_items);
   }
 
   Future<void> saveProduct(Product newProduct) async {
@@ -70,7 +66,7 @@ class Products with ChangeNotifier {
       throw error;
     } else {
       // add product
-      final res = await http.post('$_baseApiUrl.json', body: body);
+      final res = await http.post('$_baseApiUrl$_colection.json', body: body);
 
       _items.add(Product(
         id: json.decode(res.body)['name'],
@@ -98,12 +94,12 @@ class Products with ChangeNotifier {
     });
 
     if (alreadyExists >= 0) {
-      await http.patch('$_baseApiUrl/$id.json', body: body);
+      await http.patch('$_baseApiUrl$_colection/$id.json', body: body);
       _items[alreadyExists] = newProduct;
       notifyListeners();
     }
 
-    return null;
+    return Future.value();
   }
 
   Future<void> deleteProduct(String id) async {
@@ -114,7 +110,7 @@ class Products with ChangeNotifier {
       _items.remove(product);
         notifyListeners();
 
-      final res = await http.delete('$_baseApiUrl/${product.id}.json');
+      final res = await http.delete('$_baseApiUrl$_colection/${product.id}.json');
 
       if(res.statusCode >= 400) {
         _items.insert(alreadyExists, product);

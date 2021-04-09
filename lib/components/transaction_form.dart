@@ -109,8 +109,6 @@ class _TransactionFormState extends State<TransactionForm> {
       isAdditive: __transactionFormData['isAdditive'],
     );
 
-    print(__transactionFormData);
-
     setState(() => _isLoading = true);
 
     try {
@@ -137,6 +135,8 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    final transactions = Provider.of<Transactions>(context, listen: false);
+    
     return _isLoading
         ? Center(
             child: CircularProgressIndicator(),
@@ -232,6 +232,59 @@ class _TransactionFormState extends State<TransactionForm> {
                         onDateChange: (value) =>
                             __transactionFormData['date'] = value,
                       ),
+                      SizedBox(height: 16),
+                      widget.submitType == SubmitType.save ? SizedBox() : Material(
+                        color: AppColors.RED_n230.withOpacity(.1),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text('Excluir produto'),
+                                content: Text(
+                                    'Tem certeza que quer excluir esta transação?'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('Não'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  ),
+                                  TextButton(
+                                    child: Text('Sim'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                  )
+                                ],
+                              ),
+                            ).then((value) {
+                              if (value) {
+                                try {
+                                  transactions.deleteTransaction(widget.receivedTransaction.id);
+                                  Navigator.of(context).pop();
+                                } catch (error) {
+                                  print(error.toString());
+                                }
+                              }
+                            });
+                          },
+                          highlightColor: AppColors.RED_n230.withOpacity(.1),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.delete, color: AppColors.RED_n230),
+                                SizedBox(width: 12),
+                                Text(
+                                  'Excluir transação',
+                                  style: TextStyle(
+                                      fontSize: 18, color: AppColors.RED_n230),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

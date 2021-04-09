@@ -185,7 +185,7 @@ class _ProductFormState extends State<ProductForm> {
                             Validation.imgSrcValidation(value),
                       ),
                       SizedBox(height: 16),
-                      Material(
+                      widget.submitType == SubmitType.save ? SizedBox() : Material(
                         color: AppColors.RED_n230.withOpacity(.1),
                         child: InkWell(
                           onTap: () {
