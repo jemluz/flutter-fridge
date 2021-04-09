@@ -40,6 +40,14 @@ class Transactions with ChangeNotifier {
     return filteredList;
   }
 
+  Transaction loadTransaction(String id) {
+    final alreadyExists = _items.indexWhere((transaction) => transaction.id == id);
+
+    if(alreadyExists >= 0) {
+      return _items[alreadyExists];
+    }
+  }
+
   Future<void> loadTransactions() async {
     final res = await http.get('$_baseApiUrl.json');
     Map<String, dynamic> data = json.decode(res.body);
@@ -115,5 +123,14 @@ class Transactions with ChangeNotifier {
     }
 
     return null;
+  }
+
+  Future<void> deleteTransaction(String id) async {
+    final alreadyExists = _items.indexWhere((transaction) => transaction.id == id);
+
+    if(alreadyExists >= 0) {
+      _items.removeWhere((transaction) => transaction.id == id);
+      notifyListeners();
+    }
   }
 }

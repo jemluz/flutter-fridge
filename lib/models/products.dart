@@ -22,6 +22,14 @@ class Products with ChangeNotifier {
     return ranking;
   }
 
+  Product loadProduct(String id) {
+    final alreadyExists = _items.indexWhere((prod) => prod.id == id);
+
+    if(alreadyExists >= 0) {
+      return _items[alreadyExists];
+    }
+  }
+
   Future<void> loadProducts() async {
     final res = await http.get('$_baseApiUrl.json');
     Map<String, dynamic> data = json.decode(res.body);
@@ -96,5 +104,22 @@ class Products with ChangeNotifier {
     }
 
     return null;
+  }
+
+  Future<void> deleteProduct(String id) async {
+    final alreadyExists = _items.indexWhere((prod) => prod.id == id);
+
+    if(alreadyExists >= 0) {
+      final product = _items[alreadyExists];
+      _items.remove(product);
+        notifyListeners();
+
+      final res = await http.delete('$_baseApiUrl/${product.id}.json');
+
+      if(res.statusCode >= 400) {
+        _items.insert(alreadyExists, product);
+        notifyListeners();
+      }
+    }
   }
 }

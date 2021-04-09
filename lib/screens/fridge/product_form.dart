@@ -147,7 +147,9 @@ class _ProductFormState extends State<ProductForm> {
                   ),
                 ),
                 TextButton(
-                    onPressed: () => _submitForm(), child: Text('Confirmar')),
+                  onPressed: () => _submitForm(),
+                  child: Text('Confirmar'),
+                ),
               ],
               content: SingleChildScrollView(
                 child: Form(
@@ -183,63 +185,64 @@ class _ProductFormState extends State<ProductForm> {
                             Validation.imgSrcValidation(value),
                       ),
                       SizedBox(height: 16),
-                      DeleteButton(
-                        onPressed: () =>
-                            products.deleteProduct(widget.receivedProduct.id),
-                      ),
+                      Material(
+                        color: AppColors.RED_n230.withOpacity(.1),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text('Excluir produto'),
+                                content: Text(
+                                    'Tem certeza que quer excluir este produto?'),
+                                actions: [
+                                  TextButton(
+                                    child: Text('Não'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  ),
+                                  TextButton(
+                                    child: Text('Sim'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                  )
+                                ],
+                              ),
+                            ).then((value) {
+                              if (value) {
+                                try {
+                                  products
+                                      .deleteProduct(widget.receivedProduct.id);
+                                  Navigator.of(context).pop();
+                                } catch (error) {
+                                  print(error.toString());
+                                }
+                              }
+                            });
+                          },
+                          highlightColor: AppColors.RED_n230.withOpacity(.1),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.delete, color: AppColors.RED_n230),
+                                SizedBox(width: 12),
+                                Text(
+                                  'Excluir produto',
+                                  style: TextStyle(
+                                      fontSize: 18, color: AppColors.RED_n230),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
             ),
           );
-  }
-}
-
-class DeleteButton extends StatelessWidget {
-  const DeleteButton({
-    Key key,
-    @required this.onPressed,
-  }) : super(key: key);
-
-  final Function onPressed;
-
-  _showDeleteDialog(BuildContext context, Function onPressed) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (_) {
-          return GenericDialog(
-            context: context,
-            title: 'Excluir produto',
-            message: 'Tem certeza que quer excluir este produto?',
-            onPressed: onPressed,
-          );
-        });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.RED_n230.withOpacity(.1),
-      child: InkWell(
-        onTap: () => _showDeleteDialog(context, onPressed),
-        highlightColor: AppColors.RED_n230.withOpacity(.1),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.delete, color: AppColors.RED_n230),
-              SizedBox(width: 12),
-              Text(
-                'Excluir produto',
-                style: TextStyle(fontSize: 18, color: AppColors.RED_n230),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }

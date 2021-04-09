@@ -17,7 +17,7 @@ class TopFiveContent extends StatelessWidget {
         children: <Widget>[
           CustomList(
             child: ListView.builder(
-              itemCount: 5,
+              itemCount: products.usedRanking.length > 5 ? 5 : products.usedRanking.length,
               itemBuilder: (context, index) => RankingCard(
                 index: index + 1,
                 product: products.usedRanking[index],

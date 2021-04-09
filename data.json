@@ -1,0 +1,91 @@
+{
+    "products" : {
+      "-MXlKL8mMR0xfxo8OFU3" : {
+        "amount" : 7,
+        "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-c5c75f72467b4089997934c21a6295cd.jpeg",
+        "name" : "Cenoura",
+        "totalAdded" : 12,
+        "totalUsed" : 3
+      },
+      "-MXlMSA2OoJaKivBgi9t" : {
+        "amount" : 30,
+        "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-4f6d958f593c4d07892a0dbee10197a8.png",
+        "name" : "Ovos",
+        "totalAdded" : 90,
+        "totalUsed" : 67
+      },
+      "-MXmp1EbwrZzU6N1RWvm" : {
+        "amount" : 9,
+        "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-5e2d7ad5a7124b4b8d2b0ddde7603199.jpg",
+        "name" : "Uva",
+        "totalAdded" : 46,
+        "totalUsed" : 30
+      },
+      "-MXn9N9SvCKyqmOQxDPl" : {
+        "amount" : 3,
+        "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-edc6efc8547b47a8829f2997e45a9421.png",
+        "name" : "Maça",
+        "totalAdded" : 124,
+        "totalUsed" : 71
+      },
+      "-MXnOaQIjh69GMwH8WFm" : {
+        "amount" : 5,
+        "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-a8216bc5a2ed44c8adf782d6c1d696d1.jpeg",
+        "name" : "Abacate",
+        "totalAdded" : 23,
+        "totalUsed" : 16
+      },
+      "--MXnP-NOIqez3uELRwsd" : {
+        "amount" : 16,
+        "imgSrc" : "https://assets.instabuy.com.br/ib.item.image.medium/m-137000354e9c486ca5d5d0b52b315b51.jpeg",
+        "name" : "Tomate",
+        "totalAdded" : 51,
+        "totalUsed" : 48
+      }
+    },
+    "transactions" : {
+      "-MXmp1EbwrZzU6N1RWvm" : {
+        "amount" : 6,
+        "date" : "2021-04-08 15:52:25.029007",
+        "isAdditive" : false,
+        "productName" : "Cebola"
+      },
+      "-MXn9N9SvCKyqmOQxDPl" : {
+        "amount" : 9,
+        "date" : "2021-04-08 17:24:34.194875",
+        "isAdditive" : true,
+        "productName" : "Abacate"
+      },
+      "-MXnOaQIjh69GMwH8WFm" : {
+        "amount" : 2,
+        "date" : "2021-04-08 18:29:20.820749",
+        "isAdditive" : true,
+        "productName" : "Abacate"
+      },
+      "-MXnP-NOIqez3uELRwsd" : {
+        "amount" : 6,
+        "date" : "2021-04-08 18:33:56.195844",
+        "isAdditive" : true,
+        "productName" : "Abacate"
+      },
+      "-MXnP30Y47yBSu7I0nWQ" : {
+        "amount" : 6,
+        "date" : "2021-04-08 18:34:10.223092",
+        "isAdditive" : false,
+        "productName" : "Cebola"
+      },
+      "-MXnPAoiURn21Lw6jKBG" : {
+        "amount" : 7,
+        "date" : "2021-04-08 18:34:46.605906",
+        "isAdditive" : true,
+        "productName" : "Cebola"
+      },
+      "-MXnPCcrH1M0P286aT-Q" : {
+        "amount" : "2021-04-08 18:34:54.843190",
+        "date" : "2021-04-08 18:34:54.843190",
+        "isAdditive" : true,
+        "productName" : "Cebola"
+      }
+    }
+  }
+  

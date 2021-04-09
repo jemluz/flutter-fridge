@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GenericDialog extends StatelessWidget {
-  const GenericDialog({
+class ConfirmDialog extends StatelessWidget {
+  const ConfirmDialog({
     Key key,
     @required this.context,
     @required this.message,
@@ -20,7 +20,11 @@ class GenericDialog extends StatelessWidget {
       content: Text(message),
       actions: [
         TextButton(
-          child: Text('Fechar'),
+          child: Text('Não'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        TextButton(
+          child: Text('Sim'),
           onPressed: () => onPressed,
         )
       ],

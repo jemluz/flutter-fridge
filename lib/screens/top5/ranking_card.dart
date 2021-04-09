@@ -19,7 +19,8 @@ class RankingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return product == null  ? Text('Sem produtos por aqui') : 
+    Container(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       margin: EdgeInsets.only(bottom: 12, left: 20, right: 20),
       child: Row(
