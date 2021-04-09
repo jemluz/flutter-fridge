@@ -74,8 +74,6 @@ class Transactions with ChangeNotifier {
 
     updateProductAmount(newTransaction);
 
-    print(newProductAmount);
-
     var body = json.encode({
       'productName': newTransaction.productName,
       'amount': newTransactionAmount,
@@ -97,12 +95,15 @@ class Transactions with ChangeNotifier {
   }
 
   Future<void> updateTransaction(String id, Transaction newTransaction) async {
-    var alreadyExists =
-        _items.indexWhere((transaction) => transaction.id == id);
+    products.loadProducts();
+
+    updateProductAmount(newTransaction);
+
+    var alreadyExists = _items.indexWhere((transaction) => transaction.id == id);
 
     var body = json.encode({
       'productName': newTransaction.productName,
-      'amount': newTransaction.date,
+      'amount': newTransaction.amount,
       'date': newTransaction.date,
       'isAdditive': newTransaction.isAdditive,
     });

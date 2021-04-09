@@ -34,7 +34,7 @@ class _TransactionFormState extends State<TransactionForm> {
   TextEditingController _amountCtrl;
 
   DateTime _date = DateTime.now();
-  bool _isAdditive = true;
+  bool _isAdditive;
 
   final _addTransactionForm = GlobalKey<FormState>();
   final __transactionFormData = Map<String, Object>();
@@ -60,6 +60,12 @@ class _TransactionFormState extends State<TransactionForm> {
     super.initState();
     final productParent = widget.productParent;
     final transaction = widget.receivedTransaction;
+
+    if(widget.receivedTransaction == null) {
+      _isAdditive = true;
+    } else {
+      _isAdditive = widget.receivedTransaction.isAdditive;
+    }
 
     // to add transaction modal (receive a product)
     if (__transactionFormData.isEmpty && productParent != null ||
@@ -92,6 +98,8 @@ class _TransactionFormState extends State<TransactionForm> {
     setState(() {
       _isAdditive = value;
       __transactionFormData['isAdditive'] = _isAdditive;
+
+  
     });
   }
 
@@ -199,7 +207,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               FilterButton(
                                 icon: 'assets/icons/additive.svg',
                                 onPressed: () => _setTransactionType(true),
-                                iconColor: _isAdditive
+                                iconColor:_isAdditive
                                     ? Theme.of(context).primaryColor
                                     : AppColors.GRAY_n135,
                                 bgColor: _isAdditive
