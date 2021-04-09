@@ -109,7 +109,7 @@ class Transactions with ChangeNotifier {
     });
 
     if (alreadyExists >= 0) {
-      await http.patch('$_baseApiUrl/$id.json', body: body);
+      await http.patch('$_baseApiUrl/$_colection/$id.json', body: body);
       products.loadProducts().then((value) => null);
       _items[alreadyExists] = newTransaction;
       notifyListeners();

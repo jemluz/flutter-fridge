@@ -12,10 +12,6 @@ class Products with ChangeNotifier {
 
   List<Product> get items => [..._items];
 
-  int get itemsCount {
-    return _items.length;
-  }
-
   List<Product> get usedRanking {
     List<Product> ranking = [..._items];
     ranking.sort((a, b) => b.totalUsed.compareTo(a.totalUsed));
